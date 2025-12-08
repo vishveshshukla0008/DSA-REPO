@@ -1,0 +1,1 @@
+console.log(isAutomorphic(25))
