@@ -1,22 +1,29 @@
-class Solution {
-    is_neon(nStr) {
-        // Write your code here
-        let sqr = nStr ** 2;
-        let sqrCopy = sqr;
-        let sum = 0;
-        while (sqr > 0) {
-            //find last digit
-            let ld = sqr % 10;
+let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-            // operation
-            sum += ld;
+let start = 0;
+let end = arr.length - 1;
+let target = 6;
+let idx = null;
 
-            // remove digit
-            sqr = Math.floor(sqr / 10);
-        }
+while (start <= end) {
 
-        return nStr === sum ? "Yes" : "No";
+    // Calculate Mid :
+
+    let mid = start + Math.floor((end - start) / 2);
+
+    // check cases
+
+    // when mid is our target :
+    if (arr[mid] == target) {
+        idx = mid;
+        break;
+    }
+
+    if (arr[mid] > target) {
+        end = mid - 1;
+    } else {
+        start = mid + 1;
     }
 }
 
-module.exports = Solution;
+console.log(idx)
