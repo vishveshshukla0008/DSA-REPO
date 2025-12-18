@@ -1,29 +1,23 @@
-let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+function bubbleSort(arr) {
+    let it = 0;
 
-let start = 0;
-let end = arr.length - 1;
-let target = 6;
-let idx = null;
+    while (it < arr.length - 1) {
+        let swapped = false;
 
-while (start <= end) {
+        for (let i = 0; i < arr.length - 1 - it; i++) {
+            if (arr[i] > arr[i + 1]) {
+                let temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                swapped = true;
+            }
+        }
 
-    // Calculate Mid :
-
-    let mid = start + Math.floor((end - start) / 2);
-
-    // check cases
-
-    // when mid is our target :
-    if (arr[mid] == target) {
-        idx = mid;
-        break;
+        if (!swapped) break;
+        it++;
     }
 
-    if (arr[mid] > target) {
-        end = mid - 1;
-    } else {
-        start = mid + 1;
-    }
+    console.log(arr);
 }
 
-console.log(idx)
+bubbleSort([3, 8, 4, 1, 7]);
