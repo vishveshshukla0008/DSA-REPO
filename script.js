@@ -1,19 +1,17 @@
-function InsertionSort(arr) {
-    for (let i = 0; i < arr.length - 1; i++) {
-        let min = i;
-        for (let j = i + 1; j < arr.length; j++) {
-            if (arr[j] < arr[min]) {
-                min = j;
-                isSwapped = true;
-            }
-        }
-        let temp = arr[i];
-        arr[i] = arr[min];
-        arr[min] = temp;
-    }
+function capitalizeEnds(str) {
+    let arr = str.split(" ");
+   return str
+        .split(" ")
+        .map(word => {
+            if (word.length === 1) return word.toUpperCase();
+            return (
+                word[0].toUpperCase() +
+                word.slice(1, -1) +
+                word[word.length - 1].toUpperCase()
+            );
+        })
+        .join(" ");
 
-    console.log(arr)
 }
 
-
-InsertionSort([3, 2, 4, 5, 1, 0, 7])
+console.log(capitalizeEnds("Mera desh mahan hai aur rahega"));
