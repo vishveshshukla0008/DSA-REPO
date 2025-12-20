@@ -1,17 +1,23 @@
-function capitalizeEnds(str) {
-    let arr = str.split(" ");
-   return str
-        .split(" ")
-        .map(word => {
-            if (word.length === 1) return word.toUpperCase();
-            return (
-                word[0].toUpperCase() +
-                word.slice(1, -1) +
-                word[word.length - 1].toUpperCase()
-            );
-        })
-        .join(" ");
+function characterFrequency(str) {
+    if (str.length == 0) {
+        return;
+    }
+    let obj = {};
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] == " ") {
+            continue;
+        }
+        if (obj[str[i]] > 0) {
+            obj[str[i]]++;
+        } else {
+            obj[str[i]] = 1;
+        }
+    }
 
+
+    let result = Object.entries(obj).sort().forEach(([key, val]) => {
+        console.log(`${key}:${val}`)
+    })
 }
 
-console.log(capitalizeEnds("Mera desh mahan hai aur rahega"));
+characterFrequency("hello");
