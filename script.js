@@ -1,23 +1,28 @@
-function characterFrequency(str) {
-    if (str.length == 0) {
-        return;
-    }
-    let obj = {};
-    for (let i = 0; i < str.length; i++) {
-        if (str[i] == " ") {
-            continue;
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var greatestLetter = function (s) {
+    let upper = new Array(26).fill(false);
+    let lower = new Array(26).fill(false);
+
+
+    for (let ch of s) {
+        let code = ch.charCodeAt(0);
+        if (code >= 65 && code <= 90) {
+            upper[code - 65] = true;
+        } else if (code >= 97 && code <= 122) {
+            lower[code - 97] = true;
         }
-        if (obj[str[i]] > 0) {
-            obj[str[i]]++;
-        } else {
-            obj[str[i]] = 1;
+    }
+
+    for (let i = 25; i >= 0; i--) {
+        if (lower[i] && upper[i]) {
+            return String.fromCharCode(i + 65);
         }
     }
 
+    return ""
+};
 
-    let result = Object.entries(obj).sort().forEach(([key, val]) => {
-        console.log(`${key}:${val}`)
-    })
-}
-
-characterFrequency("hello");
+greatestLetter("yashYASH");
