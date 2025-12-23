@@ -1,28 +1,33 @@
 /**
  * @param {string} s
- * @return {string}
+ * @param {string} target
+ * @return {number}
  */
-var greatestLetter = function (s) {
-    let upper = new Array(26).fill(false);
-    let lower = new Array(26).fill(false);
+var rearrangeCharacters = function (s, target) {
+    let freqS = {};
+    let freqT = {};
 
-
+    // frequency of s
     for (let ch of s) {
-        let code = ch.charCodeAt(0);
-        if (code >= 65 && code <= 90) {
-            upper[code - 65] = true;
-        } else if (code >= 97 && code <= 122) {
-            lower[code - 97] = true;
-        }
+        freqS[ch] = (freqS[ch] || 0) + 1;
     }
 
-    for (let i = 25; i >= 0; i--) {
-        if (lower[i] && upper[i]) {
-            return String.fromCharCode(i + 65);
-        }
+    // frequency of target
+    for (let ch of target) {
+        freqT[ch] = (freqT[ch] || 0) + 1;
     }
 
-    return ""
-};
+    console.log(freqS)
+    console.log(freqT)
+        let min = Infinity;
+    
+        for (let ch in freqT) {
+            if (!freqS[ch]) return 0;
+            min = Math.min(min, Math.floor(freqS[ch] / freqT[ch]));
+        }
+    
+        return min;
+};  
 
-greatestLetter("yashYASH");
+
+console.log(rearrangeCharacters("ilovecodingonleetcode", "code"));
