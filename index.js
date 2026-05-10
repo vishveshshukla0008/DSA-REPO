@@ -1,33 +1,74 @@
-// Quick Sort :
-let arr = [10, 20, 10, 0, 5];
-function quickSort(arr, start, end) {
-  if (start >= end) return;
-  let pivot = arr[end];
-  let pivotIndex = findPivotIndex(arr, start, end, pivot);
-  quickSort(arr, start, pivotIndex-1);
-  quickSort(arr, pivotIndex+1, end);
-}
+// 875. Koko Eating Bananas
 
-function findPivotIndex(arr, start, end, pivot) {
-  let i = start - 1,
-    j = start;
-  while (j < end) {
-    if (arr[j] < pivot) {
-      i++;
-      swap(arr, i, j);
+// Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours.
+// 
+// Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour.
+// 
+// Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return.
+// 
+// Return the minimum integer k such that she can eat all the bananas within h hours.
+// 
+// Example 1:
+// 
+// Input: piles = [3,6,7,11], h = 8
+// Output: 4
+// Example 2:
+// 
+// Input: piles = [30,11,23,4,20], h = 5
+// Output: 30
+// Example 3:
+// 
+// Input: piles = [30,11,23,4,20], h = 6
+// Output: 23
+//  
+// 
+// Constraints:
+// 
+// 1 <= piles.length <= 104
+// piles.length <= h <= 109
+// 1 <= piles[i] <= 109
+
+
+
+var minEatingSpeed = function (piles, h) {
+
+  let start = 1;
+  let end = findMax(piles);
+
+  let ans = -1;
+
+  while (start <= end) {
+
+    let totalHrs = 0;
+
+    let mid = Math.floor(start + (end - start) / 2);
+
+    for (let num of piles) {
+
+      // ceil(num / mid)
+      totalHrs += Math.floor((num + mid - 1) / mid);
     }
-    j++;
+
+    if (totalHrs > h) {
+      start = mid + 1;
+    } else {
+      ans = mid;
+      end = mid - 1;
+    }
   }
-  swap(arr, i + 1, end);
-  return i + 1;
+
+  return ans;
+};
+
+function findMax(arr) {
+
+  let max = -Infinity;
+
+  for (let num of arr) {
+    max = Math.max(max, num);
+  }
+
+  return max;
 }
 
-function swap(arr, a, b) {
-  let temp = arr[a];
-  arr[a] = arr[b];
-  arr[b] = temp;
-}
-
-console.log("Before Sorting -> ", arr);
-quickSort(arr, 0, arr.length - 1);
-console.log("After Sorting -> ", arr);
+console.log(minEatingSpeed([3, 6, 7, 11], 8));
