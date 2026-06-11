@@ -1,74 +1,194 @@
-// 875. Koko Eating Bananas
-
-// Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours.
-// 
-// Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour.
-// 
-// Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return.
-// 
-// Return the minimum integer k such that she can eat all the bananas within h hours.
-// 
-// Example 1:
-// 
-// Input: piles = [3,6,7,11], h = 8
-// Output: 4
-// Example 2:
-// 
-// Input: piles = [30,11,23,4,20], h = 5
-// Output: 30
-// Example 3:
-// 
-// Input: piles = [30,11,23,4,20], h = 6
-// Output: 23
-//  
-// 
-// Constraints:
-// 
-// 1 <= piles.length <= 104
-// piles.length <= h <= 109
-// 1 <= piles[i] <= 109
-
-
-
-var minEatingSpeed = function (piles, h) {
-
-  let start = 1;
-  let end = findMax(piles);
-
-  let ans = -1;
-
-  while (start <= end) {
-
-    let totalHrs = 0;
-
-    let mid = Math.floor(start + (end - start) / 2);
-
-    for (let num of piles) {
-
-      // ceil(num / mid)
-      totalHrs += Math.floor((num + mid - 1) / mid);
-    }
-
-    if (totalHrs > h) {
-      start = mid + 1;
-    } else {
-      ans = mid;
-      end = mid - 1;
-    }
+class Node {
+  constructor(data, next) {
+    this.data = data;
+    this.next = null;
   }
-
-  return ans;
-};
-
-function findMax(arr) {
-
-  let max = -Infinity;
-
-  for (let num of arr) {
-    max = Math.max(max, num);
-  }
-
-  return max;
 }
 
-console.log(minEatingSpeed([3, 6, 7, 11], 8));
+class LL {
+  constructor() {
+    this.head = null; // pointer jo ki point karega starting ko
+    this.size = 0;
+  }
+
+  insertAtStart(value) {
+    let node = new Node(value);
+    this.size++;
+    if (this.head == null) {
+      this.head = node;
+      return;
+    }
+
+    node.next = this.head;
+    this.head = node;
+  }
+
+  insertAtEnd(value) {
+    let node = new Node(value);
+    this.size++;
+    if (this.head == null) {
+      this.head = node;
+      return;
+    }
+
+    let temp = this.head;
+
+    while (temp.next !== null) {
+      temp = temp.next;
+    }
+
+    temp.next = node;
+  }
+
+  deleteAtStart() {
+    if (this.head == null) {
+      console.log("Linked List has already empty ! can't delete !");
+      return;
+    }
+
+    this.head = this.head.next;
+    this.size--;
+  }
+
+  deleteAtLast() {
+    if (this.head === null) {
+      console.log("Linked list has already empty !");
+    }
+
+    let temp = this.head;
+
+    while (temp.next.next !== null) {
+      temp = temp.next;
+    }
+
+    temp.next = null;
+    this.size--;
+  }
+
+  insertAtPosition(position, data) {
+    // check the list is empty and inserting position!
+
+    if (position < 1 || position > this.size + 1) {
+      console.log("Position is not valid !");
+      return;
+    }
+
+    if (position === 1) {
+      this.insertAtStart(data);
+      return;
+    }
+
+    if (position === this.size + 1) {
+      this.insertAtEnd(data);
+      return;
+    }
+
+    let count = 1;
+
+    let temp = this.head;
+
+    while (count < position - 1) {
+      temp = temp.next;
+      count++;
+    }
+
+    let opt = temp.next;
+
+    let newNode = new Node(data);
+
+    newNode.next = opt;
+    temp.next = newNode;
+
+    this.size++;
+  }
+
+  deleteAtPosition(index) {
+    if (index < 0 || index >= this.size) return;
+
+    if (index == 0) {
+      this.head = this.head.next;
+      this.size--;
+      return;
+    }
+
+    let count = 1;
+
+    let temp = this.head;
+    for (let i = 0; i < index - 1; i++) {
+      temp = temp.next; // traversing !
+    }
+    temp.next = temp.next.next;
+  }
+
+  printList() {
+    // check karo ki kya list hai bi
+    if (this.head === null) {
+      console.log("Linked List is empty !");
+      return;
+    }
+
+    let temp = this.head;
+    while (temp !== null) {
+      process.stdout.write(`${temp.data}->`);
+      temp = temp.next;
+    }
+    process.stdout.write("null");
+    console.log();
+  }
+
+  getIndexValue(index) {
+    if (index < 0 || index >= this.size) return -1;
+    if (index == 0) {
+      console.log(this.head.data);
+      return;
+    }
+    let temp = this.head;
+    let count = 1;
+    while (count < index) {
+      temp = temp.next;
+      count++;
+    }
+
+    console.log(temp.next);
+  }
+
+  findMid() {
+    if (this.size == 0) {
+      console.log("Empty Linked list !");
+      return;
+    }
+
+    if (this.size == 1) {
+      console.log(this.head.data);
+      return;
+    }
+
+    // bruteforce approach !
+
+    let mid = Math.floor(this.size / 2);
+
+    let count = 1;
+    let temp = this.head;
+
+    while(count <= mid) {
+      temp = temp.next;
+      count++;
+    }
+
+    console.log(temp.data)
+  }
+}
+
+const list = new LL();
+list.insertAtEnd(10);
+list.insertAtEnd(20);
+list.insertAtEnd(30);
+list.insertAtEnd(40);
+list.insertAtEnd(60);
+list.insertAtEnd(70);
+// list.insertAtEnd(60);
+
+list.printList();
+console.log(list.size);
+
+list.findMid();
