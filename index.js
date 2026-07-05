@@ -1,41 +1,70 @@
-class Queue {
-  constructor() {
-    this.arr = [];
-    this.size = 0;
+class Deque {
+  constructor(size) {
+    this.arr = new Array(size);
+    this.front = -1;
+    this.rear = -1;
+    this.size = this.arr.length;
   }
-
   enqueue(val) {
-    this.arr.push(val);
-    this.size++;
+    if (this.rear == -1 && this.front == -1) {
+      this.front = 0;
+      this.rear = 0;
+      this.arr[this.rear] = val;
+      return;
+    }
+
+    if ((this.rear + 1) % this.size === this.front) {
+      console.log("The Deque is full !");
+      return;
+    }
+
+    this.arr[(this.rear + 1) % this.size] = val;
+    this.rear = (this.rear + 1) % this.size;
+    return;
   }
 
   dequeue() {
-    if (this.arr.length == 0) {
-      console.log("The queue is empty !");
+    if (this.front == -1) {
+      console.log("The queue is empty !!");
       return;
     }
-    this.arr.shift();
-    this.size--;
+    if (this.front == this.rear) {
+      this.front = -1;
+      this.rear = -1;
+      return;
+    }
+
+    this.front = (this.front + 1) % this.size;
+    return;
+  }
+print() {
+  if (this.front === -1) {
+    console.log("The queue is empty!");
+    return;
   }
 
-  printQueue() {
-    if (this.arr.length == 0) {
-      console.log("The Queue is empty !");
-      return;
-    }
-    for (let el of this.arr) {
-      process.stdout.write(`${el} -> `);
-    }
-    process.stdout.write(`null \n`);
+  let i = this.front;
+
+  while (true) {
+    process.stdout.write(this.arr[i] + " ");
+
+    if (i === this.rear) break;
+
+    i = (i + 1) % this.size;
   }
+
+  console.log();
+}
 }
 
-const q = new Queue();
-q.enqueue(10);
-q.enqueue(20);
-q.enqueue(30);
-q.printQueue();
-console.log(q.size);
-q.dequeue();
-console.log(q.size);
-q.printQueue();
+const d = new Deque(5);
+d.enqueue(1);
+d.enqueue(2);
+d.enqueue(3);
+d.enqueue(4);
+d.enqueue(5);
+
+d.print();
+d.dequeue();
+d.enqueue(100);
+d.print();
