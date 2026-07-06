@@ -1,55 +1,51 @@
-class Node {
-  constructor(val) {
-    this.val = val;
-    this.next = null;
-  }
-}
-
 class Stack {
   constructor() {
     this.peak = null;
+    this.arr = [];
   }
-  push(val) {
-    let newNode = new Node(val);
-    if (this.peak == null) {
-      this.peak = newNode;
-      return true;
-    }
 
-    newNode.next = this.peak;
-    this.peak = newNode;
+  push(val) {
+    this.arr.push(val);
+    this.peak = this.arr.length - 1;
   }
 
   pop() {
-    if (this.peak == null) {
+    if (this.arr.length === 0) {
       console.log("Stack is empty !");
       return;
     }
-    const popElement = this.peak.val;
-    this.peak = this.peak.next;
+    const popElement = this.arr.pop();
+    this.peak = this.arr.length - 1;
     return popElement;
   }
 
-  printList() {
-    let temp = this.peak;
-    if (!temp) {
-      console.log("No elements in Stack !");
-      return;
+  getPeak() {
+    if (this.arr[this.peak] == undefined) {
+      console.log("Stack is empty !");
+      return null;
     }
-    while (temp) {
-      process.stdout.write(`${temp.val} -> `);
-      temp = temp.next;
-    }
-    process.stdout.write("null\n");
+
+    return this.arr[this.peak];
   }
 
-  getPeak() {
-    if (this.peak == null) {
-      console.log("Stack is empty !");
-      return;
+  print() {
+    let i = this.peak;
+    while (i >= 0) {
+      process.stdout.write(`${this.arr[i]} -> `);
+      i--;
     }
-    console.log(this.peak.val);
+    console.log();
   }
+}
+
+function reverseStack(stack) {
+  let s = new Stack();
+  let i = stack.peak;
+  while (stack.peak >= 0) {
+    s.push(stack.pop());
+  }
+
+  return s;
 }
 
 const s = new Stack();
@@ -57,14 +53,16 @@ s.push(10);
 s.push(20);
 s.push(30);
 s.push(40);
-s.push(50);
-s.printList();
-s.getPeak();
-s.pop();
+
+s.print();
+//
 // s.pop();
 // s.pop();
 // s.pop();
 // s.pop();
-// s.pop();
-s.printList();
-s.getPeak();
+// s.print();
+
+const s2 = reverseStack(s);
+s2.print();
+
+console.log(s2.getPeak());
