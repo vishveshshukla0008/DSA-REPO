@@ -1,70 +1,70 @@
-class Deque {
-  constructor(size) {
-    this.arr = new Array(size);
-    this.front = -1;
-    this.rear = -1;
-    this.size = this.arr.length;
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
   }
-  enqueue(val) {
-    if (this.rear == -1 && this.front == -1) {
-      this.front = 0;
-      this.rear = 0;
-      this.arr[this.rear] = val;
-      return;
-    }
-
-    if ((this.rear + 1) % this.size === this.front) {
-      console.log("The Deque is full !");
-      return;
-    }
-
-    this.arr[(this.rear + 1) % this.size] = val;
-    this.rear = (this.rear + 1) % this.size;
-    return;
-  }
-
-  dequeue() {
-    if (this.front == -1) {
-      console.log("The queue is empty !!");
-      return;
-    }
-    if (this.front == this.rear) {
-      this.front = -1;
-      this.rear = -1;
-      return;
-    }
-
-    this.front = (this.front + 1) % this.size;
-    return;
-  }
-print() {
-  if (this.front === -1) {
-    console.log("The queue is empty!");
-    return;
-  }
-
-  let i = this.front;
-
-  while (true) {
-    process.stdout.write(this.arr[i] + " ");
-
-    if (i === this.rear) break;
-
-    i = (i + 1) % this.size;
-  }
-
-  console.log();
-}
 }
 
-const d = new Deque(5);
-d.enqueue(1);
-d.enqueue(2);
-d.enqueue(3);
-d.enqueue(4);
-d.enqueue(5);
+class Stack {
+  constructor() {
+    this.peak = null;
+  }
+  push(val) {
+    let newNode = new Node(val);
+    if (this.peak == null) {
+      this.peak = newNode;
+      return true;
+    }
 
-d.print();
-d.dequeue();
-d.enqueue(100);
-d.print();
+    newNode.next = this.peak;
+    this.peak = newNode;
+  }
+
+  pop() {
+    if (this.peak == null) {
+      console.log("Stack is empty !");
+      return;
+    }
+    const popElement = this.peak.val;
+    this.peak = this.peak.next;
+    return popElement;
+  }
+
+  printList() {
+    let temp = this.peak;
+    if (!temp) {
+      console.log("No elements in Stack !");
+      return;
+    }
+    while (temp) {
+      process.stdout.write(`${temp.val} -> `);
+      temp = temp.next;
+    }
+    process.stdout.write("null\n");
+  }
+
+  getPeak() {
+    if (this.peak == null) {
+      console.log("Stack is empty !");
+      return;
+    }
+    console.log(this.peak.val);
+  }
+}
+
+const s = new Stack();
+s.push(10);
+s.push(20);
+s.push(30);
+s.push(40);
+s.push(50);
+s.printList();
+s.getPeak();
+s.pop();
+// s.pop();
+// s.pop();
+// s.pop();
+// s.pop();
+// s.pop();
+s.printList();
+s.getPeak();
