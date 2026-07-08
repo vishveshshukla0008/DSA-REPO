@@ -1,16 +1,15 @@
-// found vowels in the given string !
+let arr = [1, 2, 3, 4];
+let arr2 = [1, 2, 3, 4];
 
-let str = "Vishwesh shukla aeiou";
+function checkTwoArraysAreEqual(arr, arr2) {
+  if (arr.length !== arr2.length) return false;
+  let i = 0;
 
-function countVowels(s) {
-    let count = 0;
-    for(let el of s) {
-        if(el == "a" || el == "e" || el == "i" || el == "o"|| el == "u" || el == "A" || el == "E" || el == "I" || el == "O" || el == "U") {
-            count++;
-        }
-    }
-
-    return count;
+  while (i < arr.length) {
+    if (arr[i] !== arr2[i]) return false;
+    i++;
+  }
+  return true;
 }
 
-console.log(countVowels(str))
+console.log(checkTwoArraysAreEqual(arr, arr2));
