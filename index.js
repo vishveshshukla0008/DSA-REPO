@@ -1,15 +1,17 @@
-let arr = [1, 2, 3, 4];
-let arr2 = [1, 2, 3, 4];
+// Remove Duplicates from array !
 
-function checkTwoArraysAreEqual(arr, arr2) {
-  if (arr.length !== arr2.length) return false;
-  let i = 0;
+let arr = [1,2,8,2,3,4,4,4,5,6,7];
 
-  while (i < arr.length) {
-    if (arr[i] !== arr2[i]) return false;
-    i++;
-  }
-  return true;
+function removeDuplicates(arr) {
+    let ans = [];
+    arr.sort();
+    for(let i=0; i<arr.length; i++) {
+        if(arr[i] !== arr[i-1]) {
+            ans.push(arr[i]);
+        }
+    }
+    console.log(ans);
+    return ans;
 }
 
-console.log(checkTwoArraysAreEqual(arr, arr2));
+removeDuplicates(arr)
