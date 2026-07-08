@@ -1,17 +1,16 @@
-str = "cababac";
+// found vowels in the given string !
 
-function checkPalindrome(s) {
-    let i=0, j= str.length-1;
+let str = "Vishwesh shukla";
 
-    while(i != j) {
-        if(s[i] !== s[j]) {
-            return false;
+function countVowels(s) {
+    let count = 0;
+    for(let el of s) {
+        if(el == "a" || el == "e" || el == "i" || el == "o"|| el == "u" || el == "A" || el == "E" || el == "I" || el == "O" || el == "U") {
+            count++;
         }
-        i++;
-        j--;
     }
 
-    return true;
+    return count;
 }
 
-console.log(checkPalindrome(str));
+console.log(countVowels(str))
