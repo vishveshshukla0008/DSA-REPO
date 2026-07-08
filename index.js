@@ -1,6 +1,6 @@
 // found vowels in the given string !
 
-let str = "Vishwesh shukla";
+let str = "Vishwesh shukla aeiou";
 
 function countVowels(s) {
     let count = 0;
