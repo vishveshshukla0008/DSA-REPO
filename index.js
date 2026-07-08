@@ -1,13 +1,20 @@
-let num = 3;
+let n = 1;
 
-function findFact(n) {
-    if(n == 0 || n == 1) return 1;
-    let ans = 1;
-    for(let i=2; i<= n; i++) {
-        ans *= i;
+function printFibonacciNumbers(n) {
+    if(n <= 0) return;
+    let i=0;
+    let first = 0;
+    let second = 1;
+    process.stdout.write(`${first} `);
+    if(n <= 1) return;
+    process.stdout.write(`${second} `);
+    while(i !== n-2) {
+        let sum = first + second;
+        first = second;
+        second = sum;
+        process.stdout.write(`${sum} `);
+        i++;
     }
-
-    return ans;
 }
 
-console.log(findFact(num))
+printFibonacciNumbers(2);
